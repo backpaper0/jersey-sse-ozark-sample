@@ -48,23 +48,6 @@ public class BbsController {
     private CopyOnWriteArrayList<String> entries;
 
     /**
-     * フィールドを初期化します。
-     * 
-     * コントローラーはCDI管理ビーンになりますが、
-     * RequestScopedやApplicationScopedのCDI管理ビーンはClient Proxyが作られます。
-     * 
-     * Client Proxyは動的にサブクラスを生成する事で実現されますが、
-     * その関係でフィールドの初期化はコンストラクタではなくPostConstructを
-     * 付けたメソッドで行う方が良いです。
-     * 
-     */
-    @PostConstruct
-    public void init() {
-        broadcaster = new SseBroadcaster();
-        entries = new CopyOnWriteArrayList<>();
-    }
-
-    /**
      * 画面を表示します。
      * 
      * @return
@@ -114,5 +97,22 @@ public class BbsController {
                 .mediaType(MediaType.TEXT_PLAIN_TYPE).data(String.class, entry)
                 .build();
         broadcaster.broadcast(event);
+    }
+
+    /**
+     * フィールドを初期化します。
+     * 
+     * コントローラーはCDI管理ビーンになりますが、
+     * RequestScopedやApplicationScopedのCDI管理ビーンはClient Proxyが作られます。
+     * 
+     * Client Proxyは動的にサブクラスを生成する事で実現されますが、
+     * その関係でフィールドの初期化はコンストラクタではなくPostConstructを
+     * 付けたメソッドで行う方が良いです。
+     * 
+     */
+    @PostConstruct
+    public void init() {
+        broadcaster = new SseBroadcaster();
+        entries = new CopyOnWriteArrayList<>();
     }
 }
