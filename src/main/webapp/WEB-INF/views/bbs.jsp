@@ -5,10 +5,12 @@
 <html>
 <head>
 <title>Jersey SSE, MVC 1.0 sample</title>
-<script src="/sample/webjars/superagent/1.4.0/superagent.min.js"></script>
-<script src="/sample/webjars/knockout/3.4.0/knockout.js"></script>
+<script
+	src="${mvc.contextPath}/webjars/superagent/1.4.0/superagent.min.js"></script>
+<script src="${mvc.contextPath}/webjars/knockout/3.4.0/knockout.js"></script>
 </head>
 <body>
+
 	<p>
 		<input type="text" data-bind="value: entry"> <input
 			type="button" value="Post" data-bind="click: post">
@@ -26,7 +28,8 @@
 	</c:forEach>
 
 	<script>
-		var es = new EventSource('/sample/app/bbs/listen');
+		var es = new EventSource(
+				'${mvc.contextPath}${mvc.applicationPath}/bbs/listen');
 		es.addEventListener('entry', function(event) {
 			//ブロードキャストされたメッセージを表示します。
 			model.entries.unshift(event.data);
@@ -37,10 +40,12 @@
 			entries : ko.observableArray([]),
 			post : function() {
 				//メッセージを投稿します。
-				superagent.post('/sample/app/bbs/post').set('Content-Type',
-						'text/plain').send(model.entry()).end(function() {
-					model.entry('');
-				});
+				superagent.post(
+						'${mvc.contextPath}${mvc.applicationPath}/bbs/post')
+						.set('Content-Type', 'text/plain').send(model.entry())
+						.end(function() {
+							model.entry('');
+						});
 			}
 		};
 
