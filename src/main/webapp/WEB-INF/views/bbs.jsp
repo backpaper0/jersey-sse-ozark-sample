@@ -1,13 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<c:set var="contextPath" value="${mvc.contextPath}" />
+<c:set var="jaxrsRoot" value="${mvc.contextPath}${mvc.applicationPath}" />
+
 <!DOCTYPE html>
 <html>
 <head>
 <title>Jersey SSE, MVC 1.0 sample</title>
-<script
-	src="${mvc.contextPath}/webjars/superagent/1.4.0/superagent.min.js"></script>
-<script src="${mvc.contextPath}/webjars/knockout/3.4.0/knockout.js"></script>
+<script src="${contextPath}/webjars/superagent/1.4.0/superagent.min.js"></script>
+<script src="${contextPath}/webjars/knockout/3.4.0/knockout.js"></script>
 </head>
 <body>
 
@@ -28,8 +31,7 @@
 	</c:forEach>
 
 	<script>
-		var es = new EventSource(
-				'${mvc.contextPath}${mvc.applicationPath}/bbs/listen');
+		var es = new EventSource('${jaxrsRoot}/bbs/listen');
 		es.addEventListener('entry', function(event) {
 			//ブロードキャストされたメッセージを表示します。
 			model.entries.unshift(event.data);
@@ -40,12 +42,10 @@
 			entries : ko.observableArray([]),
 			post : function() {
 				//メッセージを投稿します。
-				superagent.post(
-						'${mvc.contextPath}${mvc.applicationPath}/bbs/post')
-						.set('Content-Type', 'text/plain').send(model.entry())
-						.end(function() {
-							model.entry('');
-						});
+				superagent.post('${jaxrsRoot}/bbs/post').set('Content-Type',
+						'text/plain').send(model.entry()).end(function() {
+					model.entry('');
+				});
 			}
 		};
 
