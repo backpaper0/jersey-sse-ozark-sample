@@ -17,6 +17,8 @@ dependencies {
     providedCompile 'javax:javaee-api:7.0'
     compile 'org.glassfish.ozark:ozark:1.0.0-m02'
     compile 'org.glassfish.jersey.media:jersey-media-sse:2.22'
+    compile 'org.webjars:superagent:1.4.0'
+    compile 'org.webjars:knockout:3.4.0'
     archives 'fish.payara.extras:payara-micro:4.1.1.154'
 }
 
@@ -25,7 +27,7 @@ war.archiveName = 'sample.war'
 task run(type:Exec) {
     def payaraJar = configurations.archives.find { it.name ==~ /payara-micro.*/ }
     def warFile = war.archivePath
-    commandLine 'java', '-jar', "$payaraJar", '--deploy', "$warFile"
+    commandLine 'java', '-jar', "$payaraJar", '--noCluster', '--deploy', "$warFile"
 }
 
 run.dependsOn war
