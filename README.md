@@ -29,7 +29,7 @@ gradlew run
 
 このタスクでコンパイルし、WARファイルを作り、アプリケーションサーバの起動とデプロイを行います。
 
-アプリケーションサーバには[Payara Micor](http://www.payara.fish/)を使っています。
+アプリケーションサーバには[Payara Micro](http://www.payara.fish/)を使っています。
 
 上記のコマンドを実行して次のようなログが出力されたら起動完了です。
 
