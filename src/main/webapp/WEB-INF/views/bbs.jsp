@@ -19,13 +19,13 @@
 			type="button" value="Post" data-bind="click: post">
 	</p>
 
-	<%-- ブロードキャストされたメッセージを表示する領域です。 --%>
+	<!-- ブロードキャストされたメッセージを表示する領域です。 -->
 	<div data-bind="foreach: entries">
 		<p data-bind="text: $data"></p>
 	</div>
 
-	<%-- このクライアントが画面を表示するまでに他のクライアントで
-	     投稿されたメッセージを表示する領域です。 --%>
+	<!-- このクライアントが画面を表示するまでに他のクライアントで
+	     投稿されたメッセージを表示する領域です。 -->
 	<c:forEach var="entry" items="${entries}">
 		<p>${fn:escapeXml(entry)}</p>
 	</c:forEach>
