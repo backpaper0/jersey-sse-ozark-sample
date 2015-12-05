@@ -1,0 +1,8 @@
+.broadcasted {
+	opacity: 0;
+}
+
+.shown {
+	opacity: 1;
+	transition: opacity 1s;
+}

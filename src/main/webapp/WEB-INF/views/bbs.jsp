@@ -3,7 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <c:set var="contextPath" value="${mvc.contextPath}" />
-<c:set var="jaxrsRoot" value="${mvc.contextPath}${mvc.applicationPath}" />
 
 <!DOCTYPE html>
 <html>
@@ -11,6 +10,7 @@
 <title>Jersey SSE, MVC 1.0 sample</title>
 <script src="${contextPath}/webjars/superagent/1.4.0/superagent.min.js"></script>
 <script src="${contextPath}/webjars/knockout/3.4.0/knockout.js"></script>
+<link rel="stylesheet" href="${contextPath}/bss.css">
 </head>
 <body>
 
@@ -21,7 +21,7 @@
 
 	<!-- ブロードキャストされたメッセージを表示する領域です。 -->
 	<div data-bind="foreach: entries">
-		<p data-bind="text: $data"></p>
+		<p data-bind="text: entry, css: { shown: shown }" class="broadcasted"></p>
 	</div>
 
 	<!-- このクライアントが画面を表示するまでに他のクライアントで
@@ -31,25 +31,10 @@
 	</c:forEach>
 
 	<script>
-		var es = new EventSource('${jaxrsRoot}/bbs/listen');
-		es.addEventListener('entry', function(event) {
-			//ブロードキャストされたメッセージを表示します。
-			model.entries.unshift(event.data);
-		});
-
-		var model = {
-			entry : ko.observable(''),
-			entries : ko.observableArray([]),
-			post : function() {
-				//メッセージを投稿します。
-				superagent.post('${jaxrsRoot}/bbs/post').set('Content-Type',
-						'text/plain').send(model.entry()).end(function() {
-					model.entry('');
-				});
-			}
-		};
-
-		ko.applyBindings(model);
+		var context = {
+			jaxrsRoot : '${mvc.contextPath}${mvc.applicationPath}'
+		}
 	</script>
+	<script src="${contextPath}/bss.js"></script>
 </body>
 </html>
