@@ -4,7 +4,7 @@ ext {
     jerseyVersion = '2.22.2'
     superagentVersion = '1.4.0'
     knockoutVersion = '3.4.0'
-    payaraVersion = '4.1.1.161'
+    payaraVersion = '4.1.1.161.1'
 }
 
 apply plugin: 'java'
